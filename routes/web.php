@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SantriController;
 use App\Http\Controllers\SumbanganController;
-use App\Models\Santri;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -20,7 +20,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('admin')->name('admin.')->group(function(){
         Route::resource('sumbangan', SumbanganController::class)->middleware('role:owner');
-        Route::resource('santri', Santri::class)->middleware('role:owner');
+        Route::resource('santri', SantriController::class)->middleware('role:owner');
     });
 });
 

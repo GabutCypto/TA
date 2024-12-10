@@ -1,60 +1,82 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Manage Sumbangan') }}
+        <h2 class="font-semibold text-2xl text-gray-900 leading-tight">
+            {{ __('Sumbangan List') }}
         </h2>
     </x-slot>
 
-    <!-- Background for Content -->
-    <div class="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 py-12">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-            <!-- Add Sumbangan Button -->
-            <div class="mb-6 flex justify-end">
-                <a href="{{ route('admin.sumbangan.create') }}" 
-                   class="inline-flex items-center py-3 px-6 rounded-full text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 transition duration-300 ease-in-out shadow-lg hover:shadow-xl">
-                    <span class="mr-2">{{ __('Add Sumbangan') }}</span>
-                    <!-- Optional Icon if desired -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
-                    </svg>
-                </a>
-            </div>
-            
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white p-10 shadow-lg rounded-lg border border-gray-200">
 
-            <div class="bg-white p-8 shadow-lg rounded-lg">
-                <h3 class="text-2xl font-bold text-gray-800 mb-6">
-                    {{ __('Sumbangan List') }}
-                </h3>
-
-                @forelse ($sumbangan as $item)
-                    <div class="flex items-center justify-between bg-white border border-gray-200 p-4 rounded-lg mb-4 shadow-sm hover:shadow-xl transition-shadow duration-300 ease-in-out">
-                        <div class="flex items-center gap-4">
-                            <h4 class="text-lg font-semibold text-gray-800">{{ $item->nama }}</h4>
-                            <h4 class="text-lg font-semibold text-gray-800">: {{ $item->jumlah }}</h4>
-                        </div>
-
-                        <!-- Action Buttons -->
-                        <div class="flex items-center gap-x-3">
-                            <a href="{{ route('admin.sumbangan.edit', $item) }}" class="py-2 px-5 rounded-full text-white bg-indigo-700 hover:bg-indigo-800 transition duration-300 ease-in-out shadow-md hover:shadow-lg">
-                                Edit
-                            </a>
-                            <form method="POST" action="{{ route('admin.sumbangan.destroy', $item) }}">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" 
-                                        class="py-2 px-5 rounded-full text-white bg-red-700 hover:bg-red-800 transition duration-300 ease-in-out shadow-md hover:shadow-lg">
-                                    Delete
-                                </button>
-                            </form>
-                        </div>
+                <!-- Success or Error Messages -->
+                @if(session('success'))
+                    <div class="mb-6 text-sm bg-green-500 text-white py-2 px-4 rounded-lg mb-2">
+                        {{ session('success') }}
                     </div>
-                @empty
-                    <div class="text-center py-10">
-                        <p class="text-gray-500 text-lg font-semibold">
-                            {{ __('No sumbangan found.') }}
-                        </p>
+                @endif
+
+                @if(session('error'))
+                    <div class="mb-6 text-sm bg-red-500 text-white py-2 px-4 rounded-lg mb-2">
+                        {{ session('error') }}
                     </div>
-                @endforelse
+                @endif
+
+                <!-- Table -->
+                <table class="min-w-full bg-white border border-gray-200 shadow-md rounded-lg overflow-hidden">
+                    <thead>
+                        <tr class="bg-gray-100 text-gray-700 text-sm font-semibold">
+                            <th class="py-3 px-6 border-b text-left">{{ __('Sumbangan') }}</th>
+                            <th class="py-3 px-6 border-b text-left">{{ __('Deskripsi') }}</th>
+                            <th class="py-3 px-6 border-b text-left">{{ __('Jumlah') }}</th>
+                            <th class="py-3 px-6 border-b text-center">{{ __('Tindakan') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($sumbangan as $item)
+                            <tr class="hover:bg-gray-50 transition duration-200">
+                                <!-- Nama Column -->
+                                <td class="py-4 px-6 border-b text-gray-800">{{ $item->nama }}</td>
+                
+                                <!-- Deskripsi Column -->
+                                <td class="py-4 px-6 border-b text-gray-800">{{ Str::limit($item->deskripsi, 50) }}</td>
+                
+                                <!-- Jumlah Column -->
+                                <td class="py-4 px-6 border-b text-gray-800">{{ $item->jumlah }}</td>
+                
+                                <!-- Actions Column -->
+                                <td class="py-4 px-6 border-b text-center">
+                                    <div class="flex justify-center gap-4">
+                                        <!-- Edit Button -->
+                                        <a href="{{ route('admin.sumbangan.edit', $item) }}" 
+                                           class="py-2 px-4 rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300 ease-in-out shadow-md">
+                                            Edit
+                                        </a>
+                
+                                        <!-- Delete Button -->
+                                        <form method="POST" action="{{ route('admin.sumbangan.destroy', $item) }}" class="inline-block">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" 
+                                                    class="py-2 px-4 rounded-lg text-white bg-red-600 hover:bg-red-700 transition duration-300 ease-in-out shadow-md">
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+
+                <!-- Add New Sumbangan Button -->
+                <div class="mt-6">
+                    <a href="{{ route('admin.sumbangan.create') }}" 
+                       class="py-3 px-6 rounded-lg text-white bg-indigo-700 hover:bg-indigo-800 transition duration-300 ease-in-out">
+                        {{ __('Tambahkan Sumbangan Baru') }}
+                    </a>
+                </div>
+
             </div>
         </div>
     </div>
