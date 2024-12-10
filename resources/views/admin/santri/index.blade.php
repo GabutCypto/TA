@@ -78,9 +78,6 @@
                         @endforeach
                     </tbody>
                 </table>
-                
-                
-
                 <!-- Add New Santri Button -->
                 <div class="mt-6">
                     <a href="{{ route('admin.santri.create') }}" class="py-3 px-6 rounded-lg text-white bg-indigo-700 hover:bg-indigo-800 transition duration-300 ease-in-out">

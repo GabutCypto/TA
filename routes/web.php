@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BayarSumbanganController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SantriController;
 use App\Http\Controllers\SumbanganController;
@@ -17,6 +18,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::resource('bayar_sumbangan', BayarSumbanganController::class)->middleware('role:owner|buyer');
 
     Route::prefix('admin')->name('admin.')->group(function(){
         Route::resource('sumbangan', SumbanganController::class)->middleware('role:owner');
