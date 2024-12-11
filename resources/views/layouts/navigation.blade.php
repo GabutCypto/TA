@@ -16,6 +16,7 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+                @role('owner')
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('admin.sumbangan.index')" :active="request()->routeIs('admin.sumbangan.index')">
                         {{ __('Kelola Sumbangan') }}
@@ -26,7 +27,7 @@
                         {{ __('Kelola Santri') }}
                     </x-nav-link>
                 </div>
-
+                @endrole
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('bayar_sumbangan.index')" :active="request()->routeIs('bayar_sumbangan.index')">
                         {{ Auth::user()->hasRole('owner') ? __('Pembayaran Baru') : __('Bayar Sumbangan') }}

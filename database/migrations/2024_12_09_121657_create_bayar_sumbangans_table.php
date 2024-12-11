@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('bayar_sumbangans', function (Blueprint $table) {
             $table->id();
             $table->string('bukti');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('santri_id')->constrained()->onDelete('cascade');
             $table->foreignId('sumbangan_id')->constrained()->onDelete('cascade');
             $table->boolean('dibayar');

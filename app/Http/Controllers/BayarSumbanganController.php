@@ -23,7 +23,7 @@ class BayarSumbanganController extends Controller
         $user = Auth::user();
 
         if($user->hasRole('buyer')){
-            $bayar_sumbangan = $user->bayar_sumbangan()->with(['santri', 'sumbangan'])->orderBy('id', 'DESC')->get();
+            $bayar_sumbangan = $user->bayarSumbangan()->with(['santri', 'sumbangan'])->orderBy('id', 'DESC')->get();
         }
         else{
             $bayar_sumbangan = Bayar_sumbangan::with(['santri', 'sumbangan'])->orderBy('id', 'DESC')->get();
@@ -71,6 +71,7 @@ class BayarSumbanganController extends Controller
                 $validated['bukti'] = $buktiPath;
             }
 
+            $validated['user_id'] = $user->id;
             $validated['dibayar'] = false;
 
             $newBayar = Bayar_sumbangan::create($validated);
@@ -93,6 +94,9 @@ class BayarSumbanganController extends Controller
     public function show(Bayar_sumbangan $bayar_sumbangan)
     {
         //
+        $bayar_sumbangan = Bayar_sumbangan::with(['santri', 'sumbangan'])->findOrFail($bayar_sumbangan->id);
+
+        return view('admin.bayar.show', compact('bayar_sumbangan'));
         
     }
 

@@ -18,4 +18,9 @@ class Bayar_sumbangan extends Model
     public function sumbangan(){
         return $this->belongsTo(Sumbangan::class);
     }
+
+    public function user()
+{
+    return $this->belongsTo(User::class);
+}
 }
