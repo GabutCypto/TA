@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BayarSumbanganController;
+use App\Http\Controllers\ListSantriBayarController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SantriController;
 use App\Http\Controllers\SumbanganController;
@@ -20,6 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('bayar_sumbangan', BayarSumbanganController::class)->middleware('role:owner|buyer');
+    Route::get('/admin/bayar', [ListSantriBayarController::class, 'index'])->name('admin.bayar.list');
 
     Route::prefix('admin')->name('admin.')->group(function(){
         Route::resource('sumbangan', SumbanganController::class)->middleware('role:owner');
