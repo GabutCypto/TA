@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Bayar_sumbangan extends Model
+class Topup extends Model
 {
     //
     protected $guarded = [
@@ -13,10 +13,6 @@ class Bayar_sumbangan extends Model
 
     public function santri(){
         return $this->belongsTo(Santri::class);
-    }
-
-    public function sumbangan(){
-        return $this->belongsTo(Sumbangan::class);
     }
 
     public function user()

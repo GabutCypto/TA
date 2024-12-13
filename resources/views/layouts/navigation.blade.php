@@ -30,12 +30,17 @@
                 @endrole
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('admin.bayar.list')" :active="request()->routeIs('admin.bayar.list')">
-                        {{ Auth::user()->hasRole('owner') ? __('List bayar') : __('Sumbangan') }}
+                        {{ Auth::user()->hasRole('owner') ? __('List Sumbangan') : __('Sumbangan') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('bayar_sumbangan.index')" :active="request()->routeIs('bayar_sumbangan.index')">
                         {{ Auth::user()->hasRole('owner') ? __('Pembayaran Baru') : __('Bayar Sumbangan') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('topup.index')" :active="request()->routeIs('topup.index')">
+                        {{ Auth::user()->hasRole('owner') ? __('Topup Baru') : __('Topup') }}
                     </x-nav-link>
                 </div>
             </div>

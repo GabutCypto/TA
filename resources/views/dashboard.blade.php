@@ -10,6 +10,14 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     {{ __("You're logged in!") }}
+                    <div class="py-4">
+                        <h2 class="text-xl font-semibold">Selamat datang, {{ $user->name }}</h2>
+                        @role('buyer') 
+                        <div class="mt-4">
+                            <h3 class="text-lg">Saldo Anda: Rp {{ number_format($saldo, 0, ',', '.') }}</h3>
+                        </div>
+                        @endrole
+                    </div>
                 </div>
             </div>
         </div>

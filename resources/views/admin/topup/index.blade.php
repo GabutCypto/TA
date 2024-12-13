@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-2xl text-gray-900 leading-tight">
-            {{ __('List Pembayaran Sumbangan') }}
+            {{ __('List Pembayaran Topup') }}
         </h2>
     </x-slot>
 
@@ -34,16 +34,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($bayar_sumbangan as $transaction)
+                        @foreach ($topup as $transaction)
                             <tr class="hover:bg-gray-50 transition duration-200">
                                 <!-- Nama Santri Column -->
-                                <td class="py-4 px-6 border-b text-gray-800">{{ $transaction->santri->nama }}</td>
+                                <td class="py-4 px-6 border-b text-gray-800">
+                                    {{ $transaction->santri->nama }}
+                                </td>
 
                                 <!-- Total Pembayaran Column -->
-                                <td class="py-4 px-6 border-b text-gray-800">Rp {{ $transaction->sumbangan->jumlah }}</td>
+                                <td class="py-4 px-6 border-b text-gray-800">
+                                    Rp {{ number_format($transaction->jumlah, 0, ',', '.') }}
+                                </td>
 
                                 <!-- Tanggal Pembayaran Column -->
-                                <td class="py-4 px-6 border-b text-gray-800">{{ $transaction->created_at->format('d-m-Y H:i:s') }}</td>
+                                <td class="py-4 px-6 border-b text-gray-800">
+                                    {{ $transaction->created_at->format('d-m-Y H:i:s') }}
+                                </td>
 
                                 <!-- Status Column -->
                                 <td class="py-4 px-6 border-b text-center">
@@ -61,7 +67,7 @@
                                 <!-- Actions Column -->
                                 <td class="py-4 px-6 border-b text-center">
                                     <div class="flex justify-center gap-4">
-                                        <a href="{{ route('bayar_sumbangan.show', $transaction) }}" 
+                                        <a href="{{ route('topup.show', $transaction) }}" 
                                            class="py-2 px-4 rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300 ease-in-out shadow-md">
                                             {{ __('Lihat Detail') }}
                                         </a>
@@ -75,9 +81,9 @@
                 <!-- Button for Buyer Role at the Bottom -->
                 @role('buyer') <!-- Hanya muncul jika role pengguna adalah 'buyer' -->
                 <div class="mt-6 text-right">
-                    <a href="{{ route('bayar_sumbangan.create') }}" 
+                    <a href="{{ route('topup.create') }}" 
                        class="py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out shadow-md">
-                        {{ __('Tambah Pembayaran Sumbangan') }}
+                        {{ __('Tambah Pembayaran Topup') }}
                     </a>
                 </div>
                 @endrole

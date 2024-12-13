@@ -3,8 +3,10 @@
 use App\Http\Controllers\BayarSumbanganController;
 use App\Http\Controllers\ListSantriBayarController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SaldoController;
 use App\Http\Controllers\SantriController;
 use App\Http\Controllers\SumbanganController;
+use App\Http\Controllers\TopupController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -21,7 +23,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('bayar_sumbangan', BayarSumbanganController::class)->middleware('role:owner|buyer');
+    Route::resource('topup', TopupController::class)->middleware('role:owner|buyer');
     Route::get('/admin/bayar', [ListSantriBayarController::class, 'index'])->name('admin.bayar.list');
+    Route::middleware('auth')->get('/dashboard', [SaldoController::class, 'index'])->name('dashboard');
 
     Route::prefix('admin')->name('admin.')->group(function(){
         Route::resource('sumbangan', SumbanganController::class)->middleware('role:owner');

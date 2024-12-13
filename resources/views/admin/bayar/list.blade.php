@@ -22,14 +22,6 @@
                     </div>
                 @endif
 
-                @role('buyer') <!-- Hanya muncul jika role pengguna adalah 'buyer' -->
-                <div class="mb-6 text-right">
-                    <a href="{{ route('bayar_sumbangan.create') }}" 
-                       class="py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out shadow-md">
-                        {{ __('Tambah Pembayaran Sumbangan') }}
-                    </a>
-                </div>
-                @endrole
                 <!-- Table -->
                 <table class="min-w-full bg-white border border-gray-200 shadow-md rounded-lg overflow-hidden">
                     <thead>
@@ -45,11 +37,21 @@
                                 <td class="py-4 px-6 border-b text-gray-800 text-center">{{ $sumbangan->nama }}</td>
                                 <td class="py-4 px-6 border-b text-gray-800 text-center">Rp {{ $sumbangan->jumlah }}</td>
                                 <td class="py-4 px-6 border-b text-gray-800 text-left">{{ $sumbangan->deskripsi }}</td>
-
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
+
+                @role('buyer') <!-- Hanya muncul jika role pengguna adalah 'buyer' -->
+                    <!-- Add button at the bottom -->
+                    <div class="mt-6 text-right">
+                        <a href="{{ route('bayar_sumbangan.create') }}" 
+                           class="py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out shadow-md">
+                            {{ __('Tambah Pembayaran Sumbangan') }}
+                        </a>
+                    </div>
+                @endrole
+
             </div>
         </div>
     </div>
