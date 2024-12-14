@@ -7,6 +7,7 @@ use App\Http\Controllers\SaldoController;
 use App\Http\Controllers\SantriController;
 use App\Http\Controllers\SumbanganController;
 use App\Http\Controllers\TopupController;
+use App\Http\Controllers\TransaksiSaldoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -24,6 +25,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('bayar_sumbangan', BayarSumbanganController::class)->middleware('role:owner|buyer');
     Route::resource('topup', TopupController::class)->middleware('role:owner|buyer');
+    Route::resource('transaksisaldo', TransaksiSaldoController::class)->middleware('role:owner|buyer');
     Route::get('/admin/bayar', [ListSantriBayarController::class, 'index'])->name('admin.bayar.list');
     Route::middleware('auth')->get('/dashboard', [SaldoController::class, 'index'])->name('dashboard');
 

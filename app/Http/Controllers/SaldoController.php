@@ -14,22 +14,17 @@ class SaldoController extends Controller
      */
     public function index()
     {
-        // Ambil data pengguna yang sedang login
+        //
         $user = Auth::user();
 
-        // Cek apakah pengguna login
-        if (!$user) {
-            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
-        }
+    if (!$user) {
+        return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
+    }
 
-        // Cek jika saldo ada
-        if ($user->saldo) {
-            $saldo = $user->saldo;
-        } else {
-            $saldo = 0; // Atau nilai default jika saldo tidak ada
-        }
+    // Pastikan saldo adalah angka, bukan objek
+    $saldo = $user->saldo ? $user->saldo->saldo : 0; // Akses properti saldo dari objek Saldo
 
-        return view('dashboard', compact('user', 'saldo'));
+    return view('dashboard', compact('user', 'saldo'));
     }
 
     /**

@@ -13,9 +13,9 @@
                     <div class="py-4">
                         <h2 class="text-xl font-semibold">Selamat datang, {{ $user->name }}</h2>
                         @role('buyer') 
-                        <div class="mt-4">
-                            <h3 class="text-lg">Saldo Anda: Rp {{ number_format($saldo, 0, ',', '.') }}</h3>
-                        </div>
+                            <div class="mt-4">
+                                <h3 class="text-lg">Saldo Anda: Rp {{ number_format($saldo, 0, ',', '.') }}</h3>
+                            </div>
                         @endrole
                     </div>
                 </div>

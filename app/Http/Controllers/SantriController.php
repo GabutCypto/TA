@@ -17,10 +17,12 @@ class SantriController extends Controller
     public function index()
     {
         //
-        $santri = Santri::all();
+        $santri = Santri::orderBy('id', 'DESC')->take(20)->get();
+
         return view('admin.santri.index', [
             'santri' => $santri
         ]);
+
     }
 
     /**

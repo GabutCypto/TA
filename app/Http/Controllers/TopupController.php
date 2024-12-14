@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Saldo;
 use App\Models\Santri;
 use App\Models\Topup;
 use Illuminate\Http\Request;
@@ -21,15 +22,16 @@ class TopupController extends Controller
         //
         $user = Auth::user();
 
-        if ($user->hasRole('buyer')) {
-            $topup = $user->topup()->with(['santri'])->orderBy('id', 'DESC')->get();
-        } else {
-            $topup = Topup::with(['user', 'santri'])->orderBy('id', 'DESC')->get();
-        }
+if ($user->hasRole('buyer')) {
+    $topup = $user->topup()->with(['santri'])->orderBy('id', 'DESC')->take(10)->get();
+} else {
+    $topup = Topup::with(['user', 'santri'])->orderBy('id', 'DESC')->take(10)->get();
+}
 
-        return view('admin.topup.index', [
-            'topup' => $topup
-        ]);
+return view('admin.topup.index', [
+    'topup' => $topup
+]);
+
     }
 
     /**
@@ -75,7 +77,7 @@ class TopupController extends Controller
 
             DB::commit();
 
-            return redirect()->route('admin.topup.index');
+            return redirect()->route('topup.index');
         } catch (\Exception $e) {
             DB::rollBack();
             $error = ValidationException::withMessages([
@@ -110,13 +112,39 @@ class TopupController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, Topup $topup)
-    {
-        //
-        $topup->update([
-            'dibayar' => true,
-        ]);
-        return redirect()->back();
+{
+    // Cek apakah status sudah 'dibayar', jika sudah maka jangan lakukan apa-apa
+    if ($topup->dibayar) {
+        return redirect()->route('topup.index')->with('error', 'Pembayaran sudah disetujui sebelumnya.');
     }
+
+    // Update status 'dibayar' menjadi true
+    $topup->update([
+        'dibayar' => true,
+    ]);
+
+    // Cek apakah pembayaran sudah dilakukan
+    if ($topup->dibayar) {
+        // Cari saldo pengguna berdasarkan user_id
+        $saldo = Saldo::where('user_id', $topup->user_id)->first();
+
+        if ($saldo) {
+            // Jika saldo ada, tambahkan jumlah dari topup ke saldo
+            $saldo->saldo += $topup->jumlah;
+        } else {
+            // Jika tidak ada saldo, buat saldo baru untuk user tersebut
+            $saldo = new Saldo();
+            $saldo->user_id = $topup->user_id;
+            $saldo->saldo = $topup->jumlah;
+        }
+
+        // Simpan perubahan saldo
+        $saldo->save();
+    }
+
+    return redirect()->route('topup.index')->with('success', 'Pembayaran berhasil disetujui dan saldo telah ditambahkan.');
+}
+
 
     /**
      * Remove the specified resource from storage.

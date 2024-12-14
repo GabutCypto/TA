@@ -16,6 +16,11 @@ class Santri extends Model
         return $this->hasMany(Bayar_sumbangan::class);
     }
 
+    public function pengeluaran()
+    {
+        return $this->hasMany(Transaksi_Saldo::class);
+    }
+
     public function topup()
     {
         return $this->hasMany(Topup::class);

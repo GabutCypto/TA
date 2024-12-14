@@ -28,11 +28,13 @@
                     </x-nav-link>
                 </div>
                 @endrole
+                @role('buyer')
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('admin.bayar.list')" :active="request()->routeIs('admin.bayar.list')">
                         {{ Auth::user()->hasRole('owner') ? __('List Sumbangan') : __('Sumbangan') }}
                     </x-nav-link>
                 </div>
+                @endrole
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('bayar_sumbangan.index')" :active="request()->routeIs('bayar_sumbangan.index')">
                         {{ Auth::user()->hasRole('owner') ? __('Pembayaran Baru') : __('Bayar Sumbangan') }}
@@ -41,6 +43,11 @@
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('topup.index')" :active="request()->routeIs('topup.index')">
                         {{ Auth::user()->hasRole('owner') ? __('Topup Baru') : __('Topup') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('transaksisaldo.index')" :active="request()->routeIs('transaksisaldo.index')">
+                        {{ Auth::user()->hasRole('owner') ? __('Buat Pengeluaran') : __('Pengeluaran') }}
                     </x-nav-link>
                 </div>
             </div>
