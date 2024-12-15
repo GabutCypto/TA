@@ -27,6 +27,16 @@
                         {{ __('Kelola Santri') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('admin.kategori.index')" :active="request()->routeIs('admin.kategori.index')">
+                        {{ __('Kelola Ketegori') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('admin.produk.index')" :active="request()->routeIs('admin.produk.index')">
+                        {{ __('Kelola Produk') }}
+                    </x-nav-link>
+                </div>
                 @endrole
                 @role('buyer')
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">

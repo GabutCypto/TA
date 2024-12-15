@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\BayarSumbanganController;
+use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\ListSantriBayarController;
+use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SaldoController;
 use App\Http\Controllers\SantriController;
@@ -32,6 +34,8 @@ Route::middleware('auth')->group(function () {
     Route::prefix('admin')->name('admin.')->group(function(){
         Route::resource('sumbangan', SumbanganController::class)->middleware('role:owner');
         Route::resource('santri', SantriController::class)->middleware('role:owner');
+        Route::resource('kategori', KategoriController::class)->middleware('role:owner');
+        Route::resource('produk', ProdukController::class)->middleware('role:owner');
     });
 });
 
