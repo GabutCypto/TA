@@ -17,14 +17,14 @@
                     @endforeach
                 @endif
                 
-                <form method="POST" action="{{ route('admin.kategori.store') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('admin.categories.store') }}" enctype="multipart/form-data">
                     @csrf
             
                     <!-- Name -->
                     <div class="mb-6">
-                        <x-input-label for="nama" :value="__('Nama')" />
-                        <x-text-input id="nama" class="block mt-1 w-full border border-gray-300 rounded-lg p-3 focus:ring-indigo-500 focus:border-indigo-500" type="text" name="nama" :value="old('nama')" required autofocus autocomplete="nama" />
-                        <x-input-error :messages="$errors->get('nama')" class="mt-2" />
+                        <x-input-label for="name" :value="__('Name')" />
+                        <x-text-input id="name" class="block mt-1 w-full border border-gray-300 rounded-lg p-3 focus:ring-indigo-500 focus:border-indigo-500" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+                        <x-input-error :messages="$errors->get('name')" class="mt-2" />
                     </div>
             
                     <!-- Icon -->
@@ -38,11 +38,11 @@
                     <div class="flex items-center justify-between mt-4">
                         <!-- Add Button -->
                         <x-primary-button class="py-3 px-6 rounded-full text-white bg-indigo-700 hover:bg-indigo-800 transition duration-300 ease-in-out shadow-md hover:shadow-lg">
-                            {{ __('Tambahkan Kategori Baru') }}
+                            {{ __('Add New Category') }}
                         </x-primary-button>
 
                         <!-- Cancel Button -->
-                        <a href="{{ route('admin.kategori.index') }}" class="py-3 px-6 rounded-full text-gray-700 bg-gray-200 hover:bg-gray-300 transition duration-300 ease-in-out shadow-md hover:shadow-lg">
+                        <a href="{{ route('admin.categories.index') }}" class="py-3 px-6 rounded-full text-gray-700 bg-gray-200 hover:bg-gray-300 transition duration-300 ease-in-out shadow-md hover:shadow-lg">
                             {{ __('Cancel') }}
                         </a>
                     </div>

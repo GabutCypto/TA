@@ -4,15 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Kategori extends Model
+class Category extends Model
 {
     //
     protected $guarded = [
         'id',
     ];
 
-    public function produk()
+    public function products()
     {
-        return $this->hasMany(Produk::class);
+        return $this->hasMany(Product::class);
     }
 }

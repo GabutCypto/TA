@@ -28,13 +28,13 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('admin.kategori.index')" :active="request()->routeIs('admin.kategori.index')">
-                        {{ __('Kelola Ketegori') }}
+                    <x-nav-link :href="route('admin.products.index')" :active="request()->routeIs('admin.products.index')">
+                        {{ __('Manage Products') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('admin.produk.index')" :active="request()->routeIs('admin.produk.index')">
-                        {{ __('Kelola Produk') }}
+                    <x-nav-link :href="route('admin.categories.index')" :active="request()->routeIs('admin.categories.index')">
+                        {{ __('Manage Categories') }}
                     </x-nav-link>
                 </div>
                 @endrole
@@ -58,6 +58,11 @@
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('transaksisaldo.index')" :active="request()->routeIs('transaksisaldo.index')">
                         {{ Auth::user()->hasRole('owner') ? __('Buat Pengeluaran') : __('Pengeluaran') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('product_transactions.index')" :active="request()->routeIs('product_transactions.index')">
+                        {{ Auth::user()->hasRole('owner') ? __('Orderan') : __('Pesanan') }}
                     </x-nav-link>
                 </div>
             </div>

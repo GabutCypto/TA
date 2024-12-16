@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kategori;
+use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class KategoriController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-        $kategori = Kategori::all();
-        return view('admin.kategori.index', [
-            'kategori' => $kategori
+        $categories = Category::all();
+        return view('admin.categories.index', [
+            'categories' => $categories
         ]);
     }
 
@@ -28,8 +28,7 @@ class KategoriController extends Controller
      */
     public function create()
     {
-        //
-        return view('admin.kategori.create');
+        return view('admin.categories.create');
     }
 
     /**
@@ -37,9 +36,8 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
-        //
         $validated = $request->validate([
-            'nama' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'icon' => 'required|image|mimes:png,jpg,svg,jpeg',
         ]);
 
@@ -47,16 +45,16 @@ class KategoriController extends Controller
 
         try {
             if ($request->hasFile('icon')) {
-                $iconPath = $request->file('icon')->store('kategori_icon', 'public');
+                $iconPath = $request->file('icon')->store('category_icons', 'public');
                 $validated['icon'] = $iconPath;
             }
-            $validated['slug'] = Str::slug($request->nama);
+            $validated['slug'] = Str::slug($request->name);
 
-            $newKategori = Kategori::create($validated);
+            $newCategory = Category::create($validated);
 
             DB::commit();
 
-            return redirect()->route('admin.kategori.index');
+            return redirect()->route('admin.categories.index');
         } catch (\Exception $e) {
             DB::rollBack();
             $error = ValidationException::withMessages([
@@ -69,7 +67,7 @@ class KategoriController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Kategori $kategori)
+    public function show(Category $category)
     {
         //
     }
@@ -77,44 +75,47 @@ class KategoriController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Kategori $kategori)
+    public function edit(Category $category)
     {
-        //
-        return view('admin.kategori.edit', [
-            'kategori' => $kategori
+        return view('admin.categories.edit', [
+            'category' => $category
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Kategori $kategori)
+    public function update(Request $request, Category $category)
     {
-        //
         $validated = $request->validate([
-            'nama' => 'sometimes|string|max:255',
+            'name' => 'sometimes|string|max:255',
             'icon' => 'sometimes|image|mimes:png,jpg,svg,jpeg',
         ]);
 
         DB::beginTransaction();
 
         try {
+            // Cek apakah ada file icon baru yang diupload
             if ($request->hasFile('icon')) {
-                if ($kategori->icon) {
-                    Storage::delete('public/' . $kategori->icon);
+                // Hapus foto lama jika ada
+                if ($category->icon) {
+                    Storage::delete('public/' . $category->icon);
                 }
 
-                $iconPath = $request->file('icon')->store('kate$kategori', 'public');
+                // Simpan foto baru
+                $iconPath = $request->file('icon')->store('category_icons', 'public');
                 $validated['icon'] = $iconPath;
             }
 
-            $validated['slug'] = Str::slug($request->nama);
+            // Set slug
+            $validated['slug'] = Str::slug($request->name);
 
-            $kategori->update($validated);
+            // Update kategori
+            $category->update($validated);
 
             DB::commit();
 
-            return redirect()->route('admin.kategori.index');
+            return redirect()->route('admin.categories.index');
         } catch (\Exception $e) {
             DB::rollBack();
             $error = ValidationException::withMessages([
@@ -127,17 +128,16 @@ class KategoriController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Kategori $kategori)
+    public function destroy(Category $category)
     {
-        //
         try {
             // Hapus foto kategori dari storage jika ada
-            if ($kategori->icon) {
-                Storage::delete('public/' . $kategori->icon);
+            if ($category->icon) {
+                Storage::delete('public/' . $category->icon);
             }
 
             // Hapus kategori
-            $kategori->delete();
+            $category->delete();
             return redirect()->back();
         } catch (\Exception $e) {
             DB::rollBack();

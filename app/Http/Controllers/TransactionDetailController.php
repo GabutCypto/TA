@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Keranjang;
+use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
 
-class KeranjangController extends Controller
+class TransactionDetailController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class KeranjangController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Keranjang $keranjang)
+    public function show(TransactionDetail $transactionDetail)
     {
         //
     }
@@ -42,7 +42,7 @@ class KeranjangController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Keranjang $keranjang)
+    public function edit(TransactionDetail $transactionDetail)
     {
         //
     }
@@ -50,7 +50,7 @@ class KeranjangController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Keranjang $keranjang)
+    public function update(Request $request, TransactionDetail $transactionDetail)
     {
         //
     }
@@ -58,7 +58,7 @@ class KeranjangController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Keranjang $keranjang)
+    public function destroy(TransactionDetail $transactionDetail)
     {
         //
     }

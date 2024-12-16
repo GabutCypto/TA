@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Manage Product') }}
+            {{ __('Manage Categories') }}
         </h2>
     </x-slot>
 
@@ -10,9 +10,9 @@
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <!-- Add Category Button -->
             <div class="mb-6 flex justify-end">
-                <a href="{{ route('admin.produk.create') }}" 
+                <a href="{{ route('admin.categories.create') }}" 
                    class="inline-flex items-center py-3 px-6 rounded-full text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 transition duration-300 ease-in-out shadow-lg hover:shadow-xl">
-                    <span class="mr-2">{{ __('Add Product') }}</span>
+                    <span class="mr-2">{{ __('Add Category') }}</span>
                     <!-- Optional Icon if desired -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
@@ -23,32 +23,24 @@
 
             <div class="bg-white p-8 shadow-lg rounded-lg">
                 <h3 class="text-2xl font-bold text-gray-800 mb-6">
-                    {{ __('Product List') }}
+                    {{ __('Category List') }}
                 </h3>
 
-                @forelse ($produk as $produk)
+                @forelse ($categories as $category)
                     <div class="flex items-center justify-between bg-white border border-gray-200 p-4 rounded-lg mb-4 shadow-sm hover:shadow-xl transition-shadow duration-300 ease-in-out">
                         <!-- Icon and Name -->
                         <div class="flex items-center gap-4">
-                            <img src="{{ Storage::url($produk->foto) }}" alt="{{ $produk->foto }}" 
+                            <img src="{{ Storage::url($category->icon) }}" alt="{{ $category->name }}" 
                                  class="w-16 h-16 rounded-lg object-cover border border-gray-300 shadow-md">
-                            <div>
-                                <h4 class="text-lg font-semibold text-gray-800">{{ $produk->nama }}</h4>
-                            <p>
-                                Rp {{ $produk->harga }}
-                            </p>
-                            </div>
-                            <p>
-                                {{ $produk->kategori->nama }}
-                            </p>
+                            <h4 class="text-lg font-semibold text-gray-800">{{ $category->name }}</h4>
                         </div>
 
                         <!-- Action Buttons -->
                         <div class="flex items-center gap-x-3">
-                            <a href="{{ route('admin.produk.edit', $produk) }}" class="py-2 px-5 rounded-full text-white bg-indigo-700 hover:bg-indigo-800 transition duration-300 ease-in-out shadow-md hover:shadow-lg">
+                            <a href="{{ route('admin.categories.edit', $category) }}" class="py-2 px-5 rounded-full text-white bg-indigo-700 hover:bg-indigo-800 transition duration-300 ease-in-out shadow-md hover:shadow-lg">
                                 Edit
                             </a>
-                            <form method="POST" action="{{ route('admin.produk.destroy', $produk) }}">
+                            <form method="POST" action="{{ route('admin.categories.destroy', $category) }}">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" 
